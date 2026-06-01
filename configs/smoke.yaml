@@ -1,0 +1,15 @@
+# MaTBridge smoke config — 2-epoch synthetic offline PASS
+seed: 42
+epochs: 2
+n_samples: 512
+eta: 0.5
+ipf_iters: 3
+n_bridge: 32
+cat_block_size: 4
+n_categories: 4
+
+matched_eta_manifest:
+  path: configs/matched_eta_manifest.yaml
+  eta: 0.5
+
+dataset: synthetic_smoke

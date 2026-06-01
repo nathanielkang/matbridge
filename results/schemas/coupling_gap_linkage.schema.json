@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MaTBridge coupling_gap_linkage schema",
+  "description": "Output of scripts/analyze_coupling_gap.py. All three tests must pass for R6 Clause 3.",
+  "type": "object",
+  "required": ["schema", "n_observations", "test1_spearman", "test2_robust_regression_ci", "test3_permutation", "status"],
+  "properties": {
+    "schema": {"type": "string", "const": "coupling-gap-linkage-v1"},
+    "pilot_source": {"type": "string"},
+    "n_observations": {"type": "integer"},
+    "delta_cg_stats": {"type": "object"},
+    "delta_tmae_stats": {"type": "object"},
+    "test1_spearman": {
+      "type": "object",
+      "required": ["rho", "pass"],
+      "properties": {
+        "rho": {"type": "number"},
+        "p_value": {"type": "number"},
+        "threshold_rho": {"type": "number", "const": 0.5},
+        "pass": {"type": "boolean", "description": "True iff rho >= 0.50"}
+      }
+    },
+    "test2_robust_regression_ci": {
+      "type": "object",
+      "required": ["ci_low", "ci_high", "ci_excludes_zero", "pass"],
+      "properties": {
+        "slope": {"type": "number"},
+        "ci_low": {"type": "number"},
+        "ci_high": {"type": "number"},
+        "ci_level": {"type": "number"},
+        "ci_excludes_zero": {"type": "boolean"},
+        "pass": {"type": "boolean", "description": "True iff CI excludes 0"}
+      }
+    },
+    "test3_permutation": {
+      "type": "object",
+      "required": ["p_value", "n_permutations", "pass"],
+      "properties": {
+        "observed_rho": {"type": "number"},
+        "null_rho_median": {"type": "number"},
+        "p_value": {"type": "number"},
+        "n_permutations": {"type": "integer"},
+        "threshold_p": {"type": "number", "const": 0.05},
+        "pass": {"type": "boolean", "description": "True iff p_value <= 0.05"}
+      }
+    },
+    "all_tests_pass": {"type": "boolean"},
+    "status": {"type": "string", "enum": ["PASS", "FAIL"]},
+    "note": {"type": "string"}
+  }
+}

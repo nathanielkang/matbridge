@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MaTBridge matched-eta parity report schema",
+  "description": "Output of scripts/check_matched_eta.py. Zero forbidden_diffs required for R6 Clause 1.",
+  "type": "object",
+  "required": ["schema", "comparators_checked", "results", "total_forbidden_diffs", "status"],
+  "properties": {
+    "schema": {"type": "string", "const": "matched-eta-report-v1"},
+    "manifest_path": {"type": "string"},
+    "comparators_checked": {"type": "array", "items": {"type": "string"}},
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["comparator", "status", "diffs"],
+        "properties": {
+          "comparator": {"type": "string"},
+          "status": {"type": "string", "enum": ["PASS", "FAIL", "MISSING", "INSTANTIATION_ERROR"]},
+          "diffs": {"type": "array", "items": {"type": "string"}},
+          "forbidden_triggered": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "total_forbidden_diffs": {"type": "integer", "description": "Must be 0 for R6 Clause 1 PASS"},
+    "all_pass": {"type": "boolean"},
+    "status": {"type": "string", "enum": ["PASS", "FAIL"]}
+  }
+}

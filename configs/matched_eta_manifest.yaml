@@ -1,0 +1,58 @@
+# MaTBridge matched-eta manifest — CopulaCalib joint fence (DUEL_EXECUTION_CONTRACT)
+# Any parity break vs this manifest invalidates CouplingGap evidence.
+
+schema_version: "r6-matched-eta-v1"
+reference_copulacalib: "6_2026_Spring_Conference/4_ICDM_2026/B_CopulaCalib/2_Code/copulacalib.py"
+
+# Shared augmentation mixture (all joint-sampler comparators)
+eta: 0.5
+synthetic_factor: 2.0
+n_bins: 10
+n_synthetic_cap: 512
+
+# Downstream regressor parity
+regressor:
+  family: mlp
+  hidden_dim: 32
+  epochs: 50
+  seeds: [42, 43, 44]
+
+# Required joint comparators (matched-eta)
+comparators:
+  - copula_gaussian_joint
+  - copula_vine_joint
+
+# Forbidden diffs (must be zero in parity report)
+forbidden_diffs:
+  - eta
+  - synthetic_count
+  - train_budget_epochs
+  - stratum_protocol
+  - downstream_model_family
+  - random_seeds
+
+# Pilot datasets (smoke uses synthetic_smoke offline)
+pilot_datasets:
+  - synthetic_smoke
+  - diamond
+
+# Full 12-dataset pool (same as TailScore TS1)
+datasets_all:
+  - meps_19
+  - acs_income
+  - brazilian_housing
+  - diamond
+  - house_16h
+  - cpu_small
+  - naval
+  - kin8nm
+  - abalone
+  - space_ga
+  - yacht
+  - california_housing
+
+bridge:
+  bridge_off_eta: 0.0
+  matbridge_eta: 0.5
+  ipf_max_iters: 50
+  encoder_spectral_norm: true
