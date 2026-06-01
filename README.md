@@ -39,8 +39,6 @@ python scripts/run_pilot.py --flagship-9
 python scripts/analyze_coupling_gap.py
 ```
 
-Schema definitions for machine-readable outputs live in `results/schemas/`.
-
 ## Package layout
 
 | Path | Role |
